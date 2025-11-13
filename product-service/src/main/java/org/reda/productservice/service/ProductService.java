@@ -3,21 +3,18 @@ package org.reda.productservice.service;
 import org.reda.productservice.dto.ProductRequest;
 import org.reda.productservice.dto.ProductResponse;
 import org.reda.productservice.model.Product;
-import org.reda.productservice.repository.productRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
+import org.reda.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+
 
 @Service
 public class ProductService {
 
-    private final productRepository productRepository;
+    private final ProductRepository productRepository;
 
-    public ProductService(productRepository productRepository) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 

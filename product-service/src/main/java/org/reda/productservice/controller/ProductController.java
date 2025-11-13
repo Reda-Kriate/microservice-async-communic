@@ -1,6 +1,7 @@
 package org.reda.productservice.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.reda.productservice.dto.ProductRequest;
 import org.reda.productservice.dto.ProductResponse;
 import org.reda.productservice.service.ProductService;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductController {
 
     @Autowired
@@ -20,7 +21,7 @@ public class ProductController {
 
 
     @PostMapping
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.CREATED)
     public void createProduct(@RequestBody ProductRequest productRequest){
         productService.createProduct(productRequest);
     }
