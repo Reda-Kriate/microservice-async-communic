@@ -1,15 +1,18 @@
 package org.reda.productservice.service;
 
+import lombok.RequiredArgsConstructor;
 import org.reda.productservice.dto.ProductRequest;
 import org.reda.productservice.dto.ProductResponse;
 import org.reda.productservice.model.Product;
 import org.reda.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 
 @Service
+@Transactional
 public class ProductService {
 
     private final ProductRepository productRepository;
