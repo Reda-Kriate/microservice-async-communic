@@ -24,12 +24,10 @@ public class InventoryServiceApplication {
                     .build();
             Inventory inventory1 = Inventory.builder()
                     .skuCode("Iphone_13_YELLOW")
-                    .quantity(5)
+                    .quantity(0)
                     .build();
             inventoryRepo.save(inventory);
             inventoryRepo.save(inventory1);
         };
-
-
     }
 }
