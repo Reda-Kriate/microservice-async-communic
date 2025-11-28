@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/public/**").permitAll()      // tes routes publiques
+                        .requestMatchers("/api/public/**","/eureka/**").permitAll()      // mes routes publiques
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth -> oauth
