@@ -28,7 +28,7 @@ public class OrderService {
     private final OrderRepo orderRepo;
 
 
-    public void placeOrder(OrderRequest orderRequest){
+    public String placeOrder(OrderRequest orderRequest){
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
 
@@ -54,6 +54,7 @@ public class OrderService {
 
         if(allProductIsInStock){
             orderRepo.save(order);
+            return "Order place successfully .....";
         }else {
             throw new IllegalArgumentException("Product is not in stock, please try again later ....");
         }

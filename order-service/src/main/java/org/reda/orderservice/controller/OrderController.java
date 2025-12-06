@@ -1,12 +1,15 @@
 package org.reda.orderservice.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
 import org.reda.orderservice.dto.OrderRequest;
 import org.reda.orderservice.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/order")
@@ -17,10 +20,15 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public String placeOrder(@RequestBody OrderRequest orderRequest){
-        orderService.placeOrder(orderRequest);
-        return "Order place successfully .....";
+    @CircuitBreaker(name = "circuitRD" , fallbackMethod = "fallBackMeth")
+    @TimeLimiter(name = "circuitRD")
+    @Retry(name = "circuitRD")
+    public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest){
+        return CompletableFuture.supplyAsync(()-> orderService.placeOrder(orderRequest));
     }
 
+    public CompletableFuture<String> fallBackMeth(OrderRequest orderRequest, RuntimeException runtimeException){
+        return CompletableFuture.supplyAsync(()-> "Something went wrong, please try later!");
+    }
 
 }
