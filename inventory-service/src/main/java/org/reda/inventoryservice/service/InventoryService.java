@@ -18,11 +18,12 @@ import java.util.List;
 public class InventoryService {
 
     private final InventoryRepo inventoryRepo;
-    
+
     public List<InventoryResponse> skuCodeIsPresent(List<String> skuCodes) throws InterruptedException {
-        log.info("Started");
-        Thread.sleep(10000);
-        log.info("Ended");
+        log.info("INVENTORY CALLED");
+//        log.info("Started");
+//        Thread.sleep(10000);
+//        log.info("Ended");
          return inventoryRepo.findBySkuCodeIn(skuCodes)
                  .stream().map(inventory ->
                          InventoryResponse.builder()

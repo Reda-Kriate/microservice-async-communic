@@ -6,7 +6,6 @@ import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
 import org.reda.orderservice.dto.OrderRequest;
 import org.reda.orderservice.service.OrderService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
@@ -19,16 +18,16 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    @ResponseStatus(value = HttpStatus.CREATED)
     @CircuitBreaker(name = "circuitRD" , fallbackMethod = "fallBackMeth")
     @TimeLimiter(name = "circuitRD")
     @Retry(name = "circuitRD")
     public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest){
-        return CompletableFuture.supplyAsync(()-> orderService.placeOrder(orderRequest));
+        String token = orderService.extractToken();
+        return CompletableFuture.supplyAsync(()->orderService.placeOrder(orderRequest,token));
     }
 
     public CompletableFuture<String> fallBackMeth(OrderRequest orderRequest, RuntimeException runtimeException){
-        return CompletableFuture.supplyAsync(()-> "Something went wrong, please try later!");
+        return CompletableFuture.supplyAsync(()->"Something went wrong, please try later! - " + runtimeException.getMessage());
     }
 
 }
