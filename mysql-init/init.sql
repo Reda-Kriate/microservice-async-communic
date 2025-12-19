@@ -1,0 +1,2 @@
+CREATE DATABASE service;
+CREATE DATABASE inventory;

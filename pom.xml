@@ -14,6 +14,8 @@
         <module>order-service</module>
         <module>product-service</module>
         <module>api-gateway</module>
+        <module>common-events</module>
+        <module>notification-service</module>
     </modules>
 
 </project>

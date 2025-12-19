@@ -1,0 +1,59 @@
+
+services:
+  api-gateway:
+    image: redakriate/api-gateway
+    ports:
+      - "8989:8989"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - discoveryeurekaservice
+    networks:
+      - microservices-net
+
+  product-service:
+    image: redakriate/product-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - discoveryeurekaservice
+    networks:
+      - microservices-net
+
+  order-service:
+    image: redakriate/order-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - discoveryeurekaservice
+    networks:
+      - microservices-net
+
+  inventory-service:
+    image: redakriate/inventory-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - discoveryeurekaservice
+    networks:
+      - microservices-net
+
+  notification-service:
+    image: redakriate/notification-service
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - discoveryeurekaservice
+    networks:
+      - microservices-net
+networks:
+  microservices-net:
+    driver: bridge
